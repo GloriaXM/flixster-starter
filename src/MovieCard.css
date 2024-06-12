@@ -1,0 +1,26 @@
+.movie-card{
+    border: solid;
+    border-radius: 20px;
+    min-width: 200pt;
+    min-height: 250pt;
+    margin: 2%;
+    border-color: #132E32;
+    border-radius: 10%;
+    border-width: thick;
+    color: #c5fffd;
+    transition: border-color 1s ease-out 100ms;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.movie-card:hover {
+    border-color: #c5fffd;
+    box-shadow: 10px 5px 5px #88d9e6;
+}
+
+.movie-img {
+    min-width: 150pt;
+    min-height: 150pt;
+    border-color: #132E32;
+}

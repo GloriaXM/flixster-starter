@@ -1,0 +1,34 @@
+/* @keyframes gradualHover {
+    from {border-color: #132E32;}
+    to {border-color: #88d9e6;}
+} */
+
+.movie-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    /* animation-name: gradualHover;
+    animation-duration: 4s; */
+    transition: background-color 1s ease-out 100ms;
+}
+
+#load-movie{
+    border: solid;
+    border-radius: 20px;
+    min-width: 200pt;
+    min-height: 250pt;
+    margin: 2%;
+    border-color: #132E32;
+    border-radius: 10%;
+    border-width: thick;
+    color: #c5fffd;
+    font-size: x-large;
+    transition: border-color 1s ease-out 100ms;
+
+}
+
+#load-movie:hover {
+    border-color: #c5fffd;
+    box-shadow: 10px 5px 5px #88d9e6;
+}

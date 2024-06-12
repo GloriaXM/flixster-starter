@@ -1,0 +1,13 @@
+/* .search-bar {
+    aria-label: ""
+} */
+#search {
+    /* border: var(--border-width) solid var(--dark-gray); */
+    border-radius: 10%;
+    border-style: solid;
+}
+
+#submit {
+    border-radius: 10%;
+    background-color: #132E32;
+}
