@@ -17,4 +17,9 @@ const MovieCard = (props) => {
 }
 
 
-export default MovieCard
+MovieCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  backdrop_path: PropTypes.string.isRequired
+}
+export default MovieCard;

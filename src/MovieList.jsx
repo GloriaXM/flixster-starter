@@ -21,6 +21,10 @@ const MovieList = ({movieList, onClickLoadMore}) => {
 
 }
 
+MovieList.propTypes = {
+  movieList: PropTypes.array.isRequired,
+  onClickLoadMore: PropTypes.func.isRequired
+}
 
 
 export default MovieList
