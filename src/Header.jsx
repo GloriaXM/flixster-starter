@@ -2,20 +2,24 @@
 import './Header.css'
 import SearchBar from './SearchBar'
 import Sort from './Sort'
+import PropTypes from 'prop-types'
 
-const Header = () => {
+const Header = ({onSearchSubmit}) => {
 
   return (
     <div className="header">
       <h1> Flixster </h1>
       <div className="filter-bar">
-        <SearchBar/>
+        <SearchBar onSearchSubmit={onSearchSubmit}/>
         <Sort/>
       </div>
 
   </div>
   )
+}
 
+Header.propTypes = {
+  onSearchSubmit: PropTypes.func.isRequired,
 }
 
 export default Header
