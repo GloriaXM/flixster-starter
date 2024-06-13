@@ -19,11 +19,9 @@ const App = () => {
 
 
     setLoadedMovies(prevMovieList.concat(data.results));
-    // setLoadedMovies((prevMovieList) => [...prevMovieList, ...data.results] );
   };
 
   useEffect(() => {
-    console.log("Use effect called; plugged into leadSearchedMovies " + searchTerm);
     loadSearchedMovies(searchTerm);
   }, [searchTerm]);
 
@@ -37,7 +35,6 @@ const App = () => {
   }
 
   const onSubmitSearch = (searchTerm) => {
-    console.log("Setting searchterm to " + searchTerm);
     setSearchTerm(searchTerm);
   }
 
@@ -45,20 +42,27 @@ const App = () => {
     //TODO: Create one method that can make different API calls
     const apiKey = import.meta.env.VITE_API_KEY;
 
-    // const response = await fetch(`https://api.themoviedb.org/3/search/keyword?query=${searchTerm}&page=1&api_key=${apiKey}`);
     const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
     const data = await response.json();
 
-    console.log(data);
     setLoadedMovies(data.results);
   }
 
+  const goToSearchView = () => {
+    setSearchTerm('');
+    setLoadedMovies([]);
+  }
+
+  const goToNowShowingView = () => {
+    setPage(1);
+    fetchMovies([], 1);
+  }
 
 
   return (
     <div className="App">
-      <Header onSearchSubmit={onSubmitSearch}/>
-      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage} />
+      <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView}/>
+      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage}/>
       <Footer/>
   </div>
   )

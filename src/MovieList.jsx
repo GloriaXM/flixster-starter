@@ -5,9 +5,8 @@ import PropTypes from 'prop-types'
 
 const MovieList = ({movieList, onClickLoadMore}) => {
   const handleLoadMoreClick = (event) => {
-    event.preventDefault()
-    onClickLoadMore()
-
+    event.preventDefault();
+    onClickLoadMore();
   };
 
   return (
@@ -15,7 +14,7 @@ const MovieList = ({movieList, onClickLoadMore}) => {
       {movieList.map(movie => (
           <MovieCard key={movie.id} title={movie.title} rating={movie.vote_average} backdrop_path={movie.backdrop_path}/>
           ))}
-    <button onClick={handleLoadMoreClick}> Load More</button>
+    <button id="load-more-button" onClick={handleLoadMoreClick}> Load More</button>
   </div>
   )
 
