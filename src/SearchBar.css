@@ -1,6 +1,11 @@
 /* .search-bar {
     aria-label: ""
 } */
+.search-bar {
+    display: none;
+}
+
+
 #search {
     /* border: var(--border-width) solid var(--dark-gray); */
     border-radius: 10%;

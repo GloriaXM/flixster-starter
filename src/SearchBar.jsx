@@ -11,12 +11,20 @@ const SearchBar = ({onSearchSubmit}) => {
     console.log(e.target);
     setSearchTerm(e.target.querySelector('#search').value);
     console.log(e.target.querySelector('#search').value);
-    //TODO: figure out how to call onSearchSubmit
-    onSearchSubmit(searchTerm);
+    //TODO: use the Search Keyword option to perform autocomplete with the search bar
+    onSearchSubmit(e.target.querySelector('#search').value);
+  }
+
+  const goToNowShowing = (event) => {
+    event.preventDefault();
+    document.getElementById('search-bar').style.display = 'none';
+    document.getElementById('go-to-search-button').style.display = 'block';
+    document.getElementById('go-to-now-playing').style.display = 'block';
   }
 
   return (
-    <form className="search-bar" onSubmit={handleSearchSubmit} >
+    <form id="search-bar" className="search-bar" onSubmit={handleSearchSubmit} >
+      <button id="go-to-now-playing" onClick={goToNowShowing}> Go to Now Playing</button>
       <input id="search" type="search" aria-label='Search for a movie by title' placeholder='Title...'/>
       <button id="submit">Search</button>
   </form>
@@ -24,7 +32,7 @@ const SearchBar = ({onSearchSubmit}) => {
 
 }
 
-SearchBar.PropTypes - {
+SearchBar.PropTypes = {
   onSearchSubmit: PropTypes.func.isRequired
 }
 
