@@ -4,7 +4,7 @@ import SearchBar from './SearchBar'
 import Sort from './Sort'
 import PropTypes from 'prop-types'
 
-const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView}) => {
+const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView, onGetNewGenre}) => {
 
   const showSearchBar = () => {
 
@@ -14,13 +14,14 @@ const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView}) => {
     onGoToSearchView();
   }
 
+
   return (
     <div className="header">
       <h1> Flixster </h1>
       <div className="filter-bar">
         <button id="go-to-search-button" className="display-now-playing" onClick={showSearchBar}> Go to Search </button>
         <SearchBar onSearchSubmit={onSearchSubmit} onGoToNowShowingView={onGoToNowShowingView}/>
-        <Sort/>
+        <Sort onGetNewGenre={onGetNewGenre}/>
       </div>
 
   </div>

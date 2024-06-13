@@ -22,5 +22,6 @@
 .movie-img {
     min-width: 150pt;
     min-height: 150pt;
+    max-width: 200px;
     border-color: #132E32;
 }
