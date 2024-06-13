@@ -3,6 +3,7 @@ import './App.css'
 import MovieList from './MovieList'
 import Header from './Header'
 import Footer from './Footer'
+import ModalOverlay from './ModalOverlay'
 
 
 const App = () => {
@@ -63,6 +64,7 @@ const App = () => {
     <div className="App">
       <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView}/>
       <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage}/>
+      <ModalOverlay />
       <Footer/>
   </div>
   )
