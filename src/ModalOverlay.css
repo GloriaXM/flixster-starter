@@ -1,6 +1,6 @@
 .modal-overlay{
-    /* display: none;
-    align-content: center; */
+    display: none;
+    /* align-content: center; */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     top: 0;
@@ -25,6 +25,6 @@
     align-content: center;
 }
 
-.movie-img {
+.modal-movie-img {
     max-width: 200px;
 }
