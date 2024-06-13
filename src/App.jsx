@@ -4,46 +4,64 @@ import MovieList from './MovieList'
 import Header from './Header'
 import Footer from './Footer'
 
+
 const App = () => {
   const [loadedMovies, setLoadedMovies] = useState([]);
   const [page, setPage] = useState(1); //Page number of next page to load
   const baseURL = "https://image.tmdb.org/t/p/w500";
   const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchMovies = async (prevMovieList, pages) => {
+  const generalFetchMovies = async (fxn, prevMovieList, pages, searchTerm) => {
     const apiKey = import.meta.env.VITE_API_KEY;
+    let response = {};
 
-    const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pages}&api_key=${apiKey}`);
+    switch (fxn) {
+      case 'now_playing':
+        response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pages}&api_key=${apiKey}`);
+        break;
+      case 'search':
+        response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
+        break;
+      default: response = {};
+
+    }
+
     const data = await response.json();
-
-
     setLoadedMovies(prevMovieList.concat(data.results));
-    // setLoadedMovies((prevMovieList) => [...prevMovieList, ...data.results] );
-  };
+  }
 
   useEffect(() => {
-    fetchMovies(loadedMovies, page);
+    generalFetchMovies('search', [], 1, searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    generalFetchMovies('now_playing', loadedMovies, page, '');
   }, [page]);
 
   const loadAdditionalPage = () => {
     setPage(page + 1);
-    fetchMovies(loadedMovies, page+1);
+    generalFetchMovies('now_playing', loadedMovies, page+1, '');
   }
 
-  const onSubmitSearch = async (searchTerm) => {
-    //TODO: Create one method that can make different API calls
-    const apiKey = import.meta.env.VITE_API_KEY;
-    // const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pages}&api_key=${apiKey}`);
-    const response = await fetch(`https://api.themoviedb.org/3/search/keyword?query=${searchTerm}&page=1&api_key=${apiKey}`);
-    const data = await response.json();
-
-    console.log(data);
+  const onSubmitSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
   }
+
+  const goToSearchView = () => {
+    setSearchTerm('');
+    setLoadedMovies([]);
+  }
+
+  const goToNowShowingView = () => {
+    setPage(1);
+    generalFetchMovies('now_playing', [], 1, '');
+  }
+
 
   return (
     <div className="App">
-      <Header onSearchSubmit={onSubmitSearch}/>
-      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage} />
+      <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView}/>
+      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage}/>
       <Footer/>
   </div>
   )
