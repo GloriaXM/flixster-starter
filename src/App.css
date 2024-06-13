@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  background-image: linear-gradient(#53A2BE, #0A2239)
+  /* display: flex;
+  justify-content: center; */
 }
 
 .App-header {
@@ -10,6 +13,7 @@
   justify-content: space-evenly;
   color: white;
   padding: 20px;
+
 }
 
 @media (max-width: 600px) {

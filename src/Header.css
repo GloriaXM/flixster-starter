@@ -1,0 +1,17 @@
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    padding: 5%;
+    font-family: cursive;
+    color: white;
+    font-size:x-large;
+    border-radius: 10%;
+}
+
+.filter-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
+}
