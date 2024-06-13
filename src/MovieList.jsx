@@ -22,7 +22,7 @@ const MovieList = ({movieList, onClickLoadMore}) => {
 
     const response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US&api_key=${apiKey}`);
     const data = await response.json();
-    // return data;
+
     setModalMovieDetails(data);
   };
 
@@ -32,9 +32,7 @@ const MovieList = ({movieList, onClickLoadMore}) => {
   }, [modalMovieID]);
 
   useEffect(() => {
-    console.log("in useEffect " );
-    console.log(modalMovieDetails)
-    console.log(Object.keys(modalMovieDetails).length);
+    //Check that the result api call is a valid list of movies
     if (Object.keys(modalMovieDetails).length > 3 && modalMovieDetails.constructor === Object) {
       document.getElementById('modal-movie-title').textContent = modalMovieDetails.title;
       document.getElementById('modal-runtime').textContent = "Runtime: " + modalMovieDetails.runtime;
