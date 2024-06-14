@@ -39,7 +39,9 @@ const MovieList = ({movieList, onClickLoadMore}) => {
       document.getElementById('modal-release-date').textContent = "Release Date: " + modalMovieDetails.release_date;
       document.getElementById('modal-overview').textContent = "Overview: " + modalMovieDetails.overview;
       document.getElementById('modal-genres').textContent = "Genres: " + modalMovieDetails.genres.map(genre => genre.name).join(', ');
-      document.getElementById('modal-movie-img').src = "https://image.tmdb.org/t/p/w500" + modalMovieDetails.backdrop_path;
+      if (modalMovieDetails.hasOwnProperty('backdrop_path')) {
+        document.getElementById('modal-movie-img').src = "https://image.tmdb.org/t/p/w500" + modalMovieDetails.backdrop_path;
+      }
     }
   }, [modalMovieDetails]);
 

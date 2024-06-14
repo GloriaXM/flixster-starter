@@ -33,10 +33,14 @@ const MovieCard = ({id, title, rating, poster_path, onMovieCardClick}) => {
     clickedWatchedBefore = !clickedWatchedBefore;
   }
 
+  //TODO: add logic to handle incomplete movie results
   return (
     <div className="movie-card" onClick={onCardClick}>
       <div className="card-icon-display">
-        <img className="movie-img" src={"https://image.tmdb.org/t/p/w500"+poster_path}></img>
+        <img className="movie-img" src={"https://image.tmdb.org/t/p/w500"+poster_path} onError={({ currentTarget }) => {
+          currentTarget.onerror = null; // prevents looping
+          currentTarget.src="../public/movie.png";
+        }}></img>
         <div className='card-side-bar'>
           <span className="like-icon" onClick={handleLikeClick}>♥</span>
           <h3 className="watched-button" onClick={handleWatchedClick}>▶</h3>
