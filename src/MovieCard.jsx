@@ -1,7 +1,7 @@
 import './MovieCard.css'
 import PropTypes from 'prop-types'
 
-const MovieCard = ({id, title, rating, poster_path, onMovieCardClick}) => {
+const MovieCard = ({id, title, rating, poster_path, onMovieCardClick, onHandleLikeClick}) => {
 
   const onCardClick = (handleLikeClick) => {
     document.getElementById('modal-overlay').style.display = 'block';
@@ -12,13 +12,21 @@ const MovieCard = ({id, title, rating, poster_path, onMovieCardClick}) => {
   let clickedLikeBefore = false;
   const handleLikeClick = (event) => {
     event.stopPropagation();
-    if (!clickedLikeBefore){
-        event.target.style.color = "red";
-    } else {
-        event.target.style.color = "white";
-    }
-    clickedLikeBefore = !clickedLikeBefore;
 
+    let simplifiedMovieObject = {
+      "id": id,
+      "title" : title,
+      "vote_average": rating,
+      "poster_path": poster_path,
+    }
+    if (!clickedWatchedBefore){
+      event.target.style.color = "red";
+      onHandleLikeClick(simplifiedMovieObject, true);
+    } else {
+      event.target.style.color = "white";
+      onHandleLikeClick(simplifiedMovieObject, false);
+    }
+    clickedWatchedBefore = !clickedWatchedBefore;
 
   }
 

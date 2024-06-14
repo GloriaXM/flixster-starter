@@ -13,6 +13,7 @@ const App = () => {
   const [genre, setGenre] = useState('');
   const [apiFunctionCall, setApiFunctionCall] = useState('now_playing');
   const [sortAttribute, setSortAttribute] = useState('');
+  let favoritedList = [];
 
   const generalFetchMovies = async (fxn, prevMovieList) => {
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -89,13 +90,31 @@ const App = () => {
     setPage(1);
   }
 
+  const handleSideLikeClick = (event) => {
+    console.log("HandleSideLikeClick");
+    setLoadedMovies(favoritedList);
+    setSearchTerm('');
+    setApiFunctionCall('');
+    setPage(1);
+    console.log(favoritedList);
+  }
+
+  const appendFavoriteMovie = (simplifiedMovieObject, appending) => {
+    if (appending) {
+      favoritedList.push(simplifiedMovieObject);
+    } else {
+      favoritedList = favoritedList.filter((movie, index) => {movie.id !== simplifiedMovieObject.id});
+    }
+  }
+
 
 
   return (
     <div className="App">
-      <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView} onGetNewGenre={getNewGenre} onSortByAttribute={sortByAttribute}/>
-      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage}/>
-      <SideBar/>
+      <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView}
+      onGetNewGenre={getNewGenre} onSortByAttribute={sortByAttribute}/>
+      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage} appendFavoriteMovie={appendFavoriteMovie}/>
+      <SideBar onSideLikeClick={handleSideLikeClick}/>
       <Footer/>
   </div>
   )

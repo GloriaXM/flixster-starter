@@ -4,7 +4,7 @@ import MovieCard from './MovieCard'
 import PropTypes from 'prop-types'
 import ModalOverlay from './ModalOverlay'
 
-const MovieList = ({movieList, onClickLoadMore}) => {
+const MovieList = ({movieList, onClickLoadMore, appendFavoriteMovie}) => {
   const [modalMovieID, setModalMovieID] = useState(0);
   const [modalMovieDetails, setModalMovieDetails] = useState({});
 
@@ -45,11 +45,16 @@ const MovieList = ({movieList, onClickLoadMore}) => {
     }
   }, [modalMovieDetails]);
 
+  const onHandleLikeClick = (simplifiedMovieObject, appending) => {
+      appendFavoriteMovie(simplifiedMovieObject, appending);
+  }
+
   return (
     <>
       <div className="movie-list">
           {movieList.map(movie => (
-            <MovieCard key={movie.id} id={movie.id} title={movie.title} rating={movie.vote_average} poster_path={movie.poster_path} onMovieCardClick={onMovieCardClick}/>
+            <MovieCard key={movie.id} id={movie.id} title={movie.title} rating={movie.vote_average} poster_path={movie.poster_path}
+            onMovieCardClick={onMovieCardClick} onHandleLikeClick={onHandleLikeClick}/>
             ))}
         <div>
         <button id="load-more-button" onClick={handleLoadMoreClick}> Load More</button>
