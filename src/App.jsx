@@ -13,7 +13,7 @@ const App = () => {
   const [apiFunctionCall, setApiFunctionCall] = useState('now_playing');
   const [sortAttribute, setSortAttribute] = useState('');
 
-  const generalFetchMovies = async (fxn, prevMovieList, pages, searchTerm, genre, sortAttribute) => {
+  const generalFetchMovies = async (fxn, prevMovieList) => {
     const apiKey = import.meta.env.VITE_API_KEY;
     let response = {};
     console.log(fxn);
@@ -21,7 +21,7 @@ const App = () => {
     switch (fxn) {
       case 'now_playing':
         console.log("Searching by now playing");
-        response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pages}&api_key=${apiKey}`);
+        response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}&api_key=${apiKey}`);
         break;
       case 'search':
         console.log("Searching by search");
@@ -36,15 +36,15 @@ const App = () => {
         console.log("Sort attribute: " + sortAttribute + " page: " + page + " genre: " + genre);
         let url = '';
         if (genre === ''){
-          url = `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=1&sort_by=${sortAttribute}&api_key=${apiKey}`;
+          url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=${sortAttribute}&api_key=${apiKey}`;
         } else {
-          url = `https://api.themoviedb.org/3/discover/movie?with_genres=${genre}&language=en-US&page=${page}&api_key=${apiKey}`;
+          url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&with_genres=${genre}&language=en-US&page=${page}&sort_by=${sortAttribute}&api_key=${apiKey}`;
         }
         response = await fetch(url);
         break;
       default:
         console.log("We shouldn't be here!!");
-        response = response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&${pages}=1&api_key=${apiKey}`);
+        response = response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&${page}=1&api_key=${apiKey}`);
 
 
     console.log(response);
@@ -54,9 +54,6 @@ const App = () => {
     setLoadedMovies(prevMovieList.concat(data.results));
   }
 
-  // useEffect(() => {
-  //   generalFetchMovies("search", [], 1, searchTerm, '', '');
-  // }, [searchTerm]);
 
   useEffect(() => {
     generalFetchMovies(apiFunctionCall, loadedMovies, page, searchTerm, genre, sortAttribute);

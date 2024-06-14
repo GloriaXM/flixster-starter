@@ -48,7 +48,7 @@ const Sort = ({onGetNewGenre, onSortByAttribute}) => {
     <select id="sort-by-trait" onChange={sortByAttribute}>
       <option value="">Sort By</option>
       <option value="popularity.desc">Popularity</option>
-      <option value="vote_average.asc">Average Vote</option>
+      <option value="vote_average.desc">Average Vote</option>
       <option value="title.asc">Title Alphabetical</option>
     </select>
   </>
