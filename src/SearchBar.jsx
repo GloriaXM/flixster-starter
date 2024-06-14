@@ -24,7 +24,7 @@ const SearchBar = ({onSearchSubmit, onGoToNowShowingView}) => {
 
   return (
     <form id="search-bar" className="search-bar" onSubmit={handleSearchSubmit} >
-      <button id="go-to-now-showing" onClick={goToNowShowing}> Go to Now Playing</button>
+      <button id="go-to-now-showing" onClick={goToNowShowing}> Go to Now Showing</button>
       <input id="search" type="search" aria-label='Search for a movie by title' placeholder='Title...'/>
       <button id="submit">Search</button>
   </form>

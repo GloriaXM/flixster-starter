@@ -29,12 +29,10 @@ const MovieList = ({movieList, onClickLoadMore, appendFavoriteMovie}) => {
     const movieVideoData = await resMovieVideo.json();
     const allVideos = movieVideoData.results;
     const trailerKey = allVideos.find(video => video.type === 'Trailer').key;
-    console.log(trailerKey);
     setTrailerEmbedKey(trailerKey);
   };
 
   useEffect(() => {
-    console.log("Fetching movie details for " + modalMovieID );
     if (modalMovieID !== 0){
       fetchMovieDetails(modalMovieID);
     }

@@ -3,8 +3,16 @@ import './SideBar.css'
 // import MovieList from './MovieList'
 
 const SideBar = ({onSideLikeClick}) => {
+  const hideNavButtons = () => {
+    document.getElementById("sort-genre").style.display = "none";
+    document.getElementById("sort-by-trait").style.display = "none";
+    // document.getElementById("go-to-now-showing-button").style.display = "block";
+    // document.getElementById("go-to-search-button").style.display = "none";
+  }
+
   const handleSideLikeClick = (event) => {
     event.stopPropagation();
+    hideNavButtons();
     onSideLikeClick();
   }
 
