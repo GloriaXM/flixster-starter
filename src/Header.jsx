@@ -11,6 +11,8 @@ const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView, onGetNe
     document.getElementById('search-bar').style.display = 'block';
     document.getElementById('go-to-search-button').style.display = 'none';
     document.getElementById('load-more-button').style.display = 'none';
+    document.getElementById('sort-genre').style.display = 'none';
+    document.getElementById('sort-by-trait').style.display = 'none';
     onGoToSearchView();
   }
 
@@ -30,7 +32,10 @@ const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView, onGetNe
 
 Header.propTypes = {
   onSearchSubmit: PropTypes.func.isRequired,
-  onGoToSearchView: PropTypes.func.isRequired
+  onGoToSearchView: PropTypes.func.isRequired,
+  onGoToNowShowingView: PropTypes.func.isRequired,
+  onGetNewGenre: PropTypes.func.isRequired,
+  onSortByAttribute: PropTypes.func.isRequired,
 }
 
 export default Header

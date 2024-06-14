@@ -32,7 +32,6 @@ const Sort = ({onGetNewGenre, onSortByAttribute}) => {
   }
 
   const sortByAttribute = (event) => {
-    console.log(event.target.value);
     onSortByAttribute(event.target.value);
   }
 

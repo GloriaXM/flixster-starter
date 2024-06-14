@@ -14,7 +14,10 @@ const MovieCard = ({id, title, rating, poster_path, onMovieCardClick}) => {
     <div className="movie-card" onClick={onCardClick}>
       <img className="movie-img" src={"https://image.tmdb.org/t/p/w500"+poster_path}></img>
       <h2>{title}</h2>
-      <h3>{"Rating: " + rating}</h3>
+      <div className='approval-bar'>
+        <span className="like-icon">&#9829</span>
+        <h3>{"Rating: " + rating}</h3>
+      </div>
 
   </div>
   )

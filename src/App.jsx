@@ -16,25 +16,19 @@ const App = () => {
   const generalFetchMovies = async (fxn, prevMovieList) => {
     const apiKey = import.meta.env.VITE_API_KEY;
     let response = {};
-    console.log(fxn);
+    let url = '';
 
     switch (fxn) {
       case 'now_playing':
-        console.log("Searching by now playing");
         response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}&api_key=${apiKey}`);
         break;
       case 'search':
-        console.log("Searching by search");
         response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
         break;
       case 'by_genre':
-        console.log("Searching by genre");
         response = await fetch(`https://api.themoviedb.org/3/discover/movie?with_genres=${genre}&language=en-US&page=${page}&api_key=${apiKey}`);
         break;
       case 'sort_by_attribute':
-        console.log("Searching by attribute");
-        console.log("Sort attribute: " + sortAttribute + " page: " + page + " genre: " + genre);
-        let url = '';
         if (genre === ''){
           url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=${sortAttribute}&api_key=${apiKey}`;
         } else {
@@ -43,11 +37,8 @@ const App = () => {
         response = await fetch(url);
         break;
       default:
-        console.log("We shouldn't be here!!");
         response = response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&${page}=1&api_key=${apiKey}`);
 
-
-    console.log(response);
     }
 
     const data = await response.json();
@@ -65,6 +56,9 @@ const App = () => {
 
   const onSubmitSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
+    setApiFunctionCall('search');
+    setLoadedMovies([]);
+    setPage(1);
   }
 
   const goToSearchView = () => {
