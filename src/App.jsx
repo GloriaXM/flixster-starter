@@ -100,6 +100,7 @@ const App = () => {
   }
 
   const appendFavoriteMovie = (simplifiedMovieObject, appending) => {
+    //TODO: Add favorites state to access and search on every render to maintain favorite state over renders
     if (appending) {
       favoritedList.push(simplifiedMovieObject);
     } else {
