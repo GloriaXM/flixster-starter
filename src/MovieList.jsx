@@ -7,6 +7,7 @@ import ModalOverlay from './ModalOverlay'
 const MovieList = ({movieList, onClickLoadMore, appendFavoriteMovie}) => {
   const [modalMovieID, setModalMovieID] = useState(0);
   const [modalMovieDetails, setModalMovieDetails] = useState({});
+  const [trailerEmbedKey, setTrailerEmbedKey] = useState('');
 
   const handleLoadMoreClick = (event) => {
     event.preventDefault();
@@ -20,14 +21,23 @@ const MovieList = ({movieList, onClickLoadMore, appendFavoriteMovie}) => {
   const fetchMovieDetails = async (movieID) => {
     const apiKey = import.meta.env.VITE_API_KEY;
 
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US&api_key=${apiKey}`);
-    const data = await response.json();
+    const resMovieDetails = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US&api_key=${apiKey}`);
+    const movieDetails = await resMovieDetails.json();
+    setModalMovieDetails(movieDetails);
 
-    setModalMovieDetails(data);
+    const resMovieVideo = await fetch(`https://api.themoviedb.org/3/movie/${modalMovieID}/videos?language=en-US&api_key=${apiKey}`);
+    const movieVideoData = await resMovieVideo.json();
+    const allVideos = movieVideoData.results;
+    const trailerKey = allVideos.find(video => video.type === 'Trailer').key;
+    console.log(trailerKey);
+    setTrailerEmbedKey(trailerKey);
   };
 
   useEffect(() => {
-    fetchMovieDetails(modalMovieID);
+    console.log("Fetching movie details for " + modalMovieID );
+    if (modalMovieID !== 0){
+      fetchMovieDetails(modalMovieID);
+    }
 
   }, [modalMovieID]);
 
@@ -60,7 +70,7 @@ const MovieList = ({movieList, onClickLoadMore, appendFavoriteMovie}) => {
         <button id="load-more-button" onClick={handleLoadMoreClick}> Load More</button>
         </div>
       </div>
-      <ModalOverlay modalMovieID={modalMovieID}/>
+      <ModalOverlay modalMovieID={modalMovieID} embedTrailerKey={trailerEmbedKey}/>
     </>
   )
 
