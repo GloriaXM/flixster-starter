@@ -45,7 +45,7 @@ const MovieCard = ({id, title, rating, poster_path, onMovieCardClick, onHandleLi
   return (
     <div className="movie-card" onClick={onCardClick}>
       <div className="card-icon-display">
-        <img className="movie-img" src={"https://image.tmdb.org/t/p/w500"+poster_path} onError={({ currentTarget }) => {
+        <img className="movie-img" alt="movie-poster" src={"https://image.tmdb.org/t/p/w500"+poster_path} onError={({ currentTarget }) => {
           currentTarget.onerror = null; // prevents looping
           currentTarget.src="../public/movie.png";
         }}></img>

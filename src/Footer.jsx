@@ -1,15 +1,14 @@
-// import { useState } from 'react'
 import './Footer.css'
-// import MovieList from './MovieList'
 
 const Footer = () => {
 
   return (
     <div className="footer">
+      <p> About: Browse, view, and save your progress with this web app</p>
       <h3>&#169; { "2024 Flixter" }</h3>
-  </div>
+      <h3> Contact us at: Don't</h3>
+    </div>
   )
-
 }
 
 export default Footer

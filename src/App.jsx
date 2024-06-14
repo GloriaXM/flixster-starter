@@ -5,7 +5,6 @@ import Header from './Header'
 import Footer from './Footer'
 import SideBar from './SideBar'
 
-
 const App = () => {
   const [loadedMovies, setLoadedMovies] = useState([]);
   const [page, setPage] = useState(1); //Page number of next page to load
@@ -40,13 +39,11 @@ const App = () => {
         break;
       default:
         response = response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&${page}=1&api_key=${apiKey}`);
-
     }
 
     const data = await response.json();
     setLoadedMovies(prevMovieList.concat(data.results));
   }
-
 
   useEffect(() => {
     generalFetchMovies(apiFunctionCall, loadedMovies, page, searchTerm, genre, sortAttribute);
@@ -91,12 +88,10 @@ const App = () => {
   }
 
   const handleSideLikeClick = (event) => {
-    console.log("HandleSideLikeClick");
     setLoadedMovies(favoritedList);
     setSearchTerm('');
     setApiFunctionCall('');
     setPage(1);
-    console.log(favoritedList);
   }
 
   const appendFavoriteMovie = (simplifiedMovieObject, appending) => {
@@ -107,8 +102,6 @@ const App = () => {
       favoritedList = favoritedList.filter((movie, index) => {movie.id !== simplifiedMovieObject.id});
     }
   }
-
-
 
   return (
     <div className="App">

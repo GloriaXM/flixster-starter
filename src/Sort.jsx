@@ -1,6 +1,4 @@
-// import { useState } from 'react'
 import './Sort.css'
-// import MovieList from './MovieList'
 
 const Sort = ({onGetNewGenre, onSortByAttribute}) => {
   //TODO: call https://api.themoviedb.org/3/genre/movie/list to generate possible genre options
@@ -51,9 +49,7 @@ const Sort = ({onGetNewGenre, onSortByAttribute}) => {
       <option value="title.asc">Title Alphabetical</option>
     </select>
   </>
-
   )
-
 }
 
 export default Sort

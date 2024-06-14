@@ -1,13 +1,9 @@
-// import { useState } from 'react'
 import './SideBar.css'
-// import MovieList from './MovieList'
 
 const SideBar = ({onSideLikeClick}) => {
   const hideNavButtons = () => {
     document.getElementById("sort-genre").style.display = "none";
     document.getElementById("sort-by-trait").style.display = "none";
-    // document.getElementById("go-to-now-showing-button").style.display = "block";
-    // document.getElementById("go-to-search-button").style.display = "none";
   }
 
   const handleSideLikeClick = (event) => {
@@ -36,9 +32,7 @@ const SideBar = ({onSideLikeClick}) => {
       <span className="side-like-icon" onClick={handleSideLikeClick}>♥</span>
       <h3 className="side-watched-button" >▶</h3>
     </div>
-
   )
-
 }
 
 export default SideBar

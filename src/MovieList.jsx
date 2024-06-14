@@ -71,13 +71,11 @@ const MovieList = ({movieList, onClickLoadMore, appendFavoriteMovie}) => {
       <ModalOverlay modalMovieID={modalMovieID} embedTrailerKey={trailerEmbedKey}/>
     </>
   )
-
 }
 
 MovieList.propTypes = {
   movieList: PropTypes.array.isRequired,
   onClickLoadMore: PropTypes.func.isRequired
 }
-
 
 export default MovieList
