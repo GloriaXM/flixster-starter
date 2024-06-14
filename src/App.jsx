@@ -10,50 +10,60 @@ const App = () => {
   const [page, setPage] = useState(1); //Page number of next page to load
   const [searchTerm, setSearchTerm] = useState('');
   const [genre, setGenre] = useState('');
-  const [apiFunctionCall, setApiFunctionCall] = useState('')
+  const [apiFunctionCall, setApiFunctionCall] = useState('now_playing');
+  const [sortAttribute, setSortAttribute] = useState('');
 
-  const generalFetchMovies = async (fxn, prevMovieList, pages, searchTerm, genre) => {
+  const generalFetchMovies = async (fxn, prevMovieList, pages, searchTerm, genre, sortAttribute) => {
     const apiKey = import.meta.env.VITE_API_KEY;
     let response = {};
-
     console.log(fxn);
+
     switch (fxn) {
       case 'now_playing':
-        console.log('Searching by now playing');
+        console.log("Searching by now playing");
         response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pages}&api_key=${apiKey}`);
         break;
       case 'search':
-        console.log('Searching by now playing');
+        console.log("Searching by search");
         response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
         break;
       case 'by_genre':
-        console.log('Searching by now playing');
+        console.log("Searching by genre");
         response = await fetch(`https://api.themoviedb.org/3/discover/movie?with_genres=${genre}&language=en-US&page=${page}&api_key=${apiKey}`);
         break;
+      case 'sort_by_attribute':
+        console.log("Searching by attribute");
+        console.log("Sort attribute: " + sortAttribute + " page: " + page + " genre: " + genre);
+        let url = '';
+        if (genre === ''){
+          url = `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=1&sort_by=${sortAttribute}&api_key=${apiKey}`;
+        } else {
+          url = `https://api.themoviedb.org/3/discover/movie?with_genres=${genre}&language=en-US&page=${page}&api_key=${apiKey}`;
+        }
+        response = await fetch(url);
+        break;
       default:
-        response = response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=${apiKey}`);
+        console.log("We shouldn't be here!!");
+        response = response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&${pages}=1&api_key=${apiKey}`);
 
+
+    console.log(response);
     }
 
     const data = await response.json();
     setLoadedMovies(prevMovieList.concat(data.results));
   }
 
-  useEffect(() => {
-    generalFetchMovies("search", [], 1, searchTerm, '');
-  }, [searchTerm]);
+  // useEffect(() => {
+  //   generalFetchMovies("search", [], 1, searchTerm, '', '');
+  // }, [searchTerm]);
 
   useEffect(() => {
-    generalFetchMovies(apiFunctionCall, loadedMovies, page, '', genre);
-  }, [page]);
-
-  useEffect(() => {
-    generalFetchMovies("by_genre", [], 1, '', genre);
-  }, [genre]);
+    generalFetchMovies(apiFunctionCall, loadedMovies, page, searchTerm, genre, sortAttribute);
+  }, [searchTerm, page, genre, sortAttribute]);
 
   const loadAdditionalPage = () => {
     setPage(page + 1);
-    generalFetchMovies(apiFunctionCall, loadedMovies, page + 1, searchTerm, genre);
   }
 
   const onSubmitSearch = (searchTerm) => {
@@ -68,21 +78,30 @@ const App = () => {
 
   const goToNowShowingView = () => {
     setPage(1);
+    setLoadedMovies([]);
     setApiFunctionCall('now_playing');
-    generalFetchMovies('now_playing', [], 1, '');
+    generalFetchMovies('now_playing', [], 1, '', '', '');
   }
 
   const getNewGenre = (newGenreName) => {
     setLoadedMovies([]);
     setApiFunctionCall('by_genre');
     setGenre(newGenreName);
+    setPage(1);
+  }
+
+  const sortByAttribute = (sortAttribute) => {
+    setLoadedMovies([]);
+    setApiFunctionCall('sort_by_attribute');
+    setSortAttribute(sortAttribute);
+    setPage(1);
   }
 
 
 
   return (
     <div className="App">
-      <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView} onGetNewGenre={getNewGenre}/>
+      <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView} onGetNewGenre={getNewGenre} onSortByAttribute={sortByAttribute}/>
       <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage}/>
       <Footer/>
   </div>

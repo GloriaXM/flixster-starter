@@ -2,7 +2,7 @@
 import './Sort.css'
 // import MovieList from './MovieList'
 
-const Sort = ({onGetNewGenre}) => {
+const Sort = ({onGetNewGenre, onSortByAttribute}) => {
   //TODO: call https://api.themoviedb.org/3/genre/movie/list to generate possible genre options
   const genreOptions = [
   {"id": 28, "name": "Action"},
@@ -25,19 +25,33 @@ const Sort = ({onGetNewGenre}) => {
   {"id": 10752, "name": "War"},
   {"id": 37, "name": "Western"}]
 
-  const getNewMovies = (event) => {
+  const getNewGenre = (event) => {
     const newGenreName = event.target.value;
     const newGenre = genreOptions.find(genre => genre.name === newGenreName);
     onGetNewGenre(newGenre.id);
   }
 
+  const sortByAttribute = (event) => {
+    console.log(event.target.value);
+    onSortByAttribute(event.target.value);
+  }
+
   return (
-    <select id="sort-genre" onChange={getNewMovies}>
+    <>
+    <select id="sort-genre" onChange={getNewGenre}>
       <option value="">Select a Genre</option>
       {genreOptions.map(genre => (
           <option key={genre.id} id={genre.id}>{genre.name}</option>
           ))}
     </select>
+
+    <select id="sort-by-trait" onChange={sortByAttribute}>
+      <option value="">Sort By</option>
+      <option value="popularity.desc">Popularity</option>
+      <option value="vote_average.asc">Average Vote</option>
+      <option value="title.asc">Title Alphabetical</option>
+    </select>
+  </>
 
   )
 

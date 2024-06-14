@@ -46,10 +46,12 @@ const MovieList = ({movieList, onClickLoadMore}) => {
   return (
     <>
       <div className="movie-list">
-        {movieList.map(movie => (
-          <MovieCard key={movie.id} id={movie.id} title={movie.title} rating={movie.vote_average} poster_path={movie.poster_path} onMovieCardClick={onMovieCardClick}/>
-          ))}
+          {movieList.map(movie => (
+            <MovieCard key={movie.id} id={movie.id} title={movie.title} rating={movie.vote_average} poster_path={movie.poster_path} onMovieCardClick={onMovieCardClick}/>
+            ))}
+        <div>
         <button id="load-more-button" onClick={handleLoadMoreClick}> Load More</button>
+        </div>
       </div>
       <ModalOverlay modalMovieID={modalMovieID}/>
     </>

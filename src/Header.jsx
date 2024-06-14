@@ -4,7 +4,7 @@ import SearchBar from './SearchBar'
 import Sort from './Sort'
 import PropTypes from 'prop-types'
 
-const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView, onGetNewGenre}) => {
+const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView, onGetNewGenre, onSortByAttribute}) => {
 
   const showSearchBar = () => {
 
@@ -21,7 +21,7 @@ const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView, onGetNe
       <div className="filter-bar">
         <button id="go-to-search-button" className="display-now-playing" onClick={showSearchBar}> Go to Search </button>
         <SearchBar onSearchSubmit={onSearchSubmit} onGoToNowShowingView={onGoToNowShowingView}/>
-        <Sort onGetNewGenre={onGetNewGenre}/>
+        <Sort onGetNewGenre={onGetNewGenre} onSortByAttribute={onSortByAttribute}/>
       </div>
 
   </div>
