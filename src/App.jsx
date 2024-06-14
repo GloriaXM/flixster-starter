@@ -3,6 +3,7 @@ import './App.css'
 import MovieList from './MovieList'
 import Header from './Header'
 import Footer from './Footer'
+import SideBar from './SideBar'
 
 
 const App = () => {
@@ -94,6 +95,7 @@ const App = () => {
     <div className="App">
       <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView} onGetNewGenre={getNewGenre} onSortByAttribute={sortByAttribute}/>
       <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage}/>
+      <SideBar/>
       <Footer/>
   </div>
   )

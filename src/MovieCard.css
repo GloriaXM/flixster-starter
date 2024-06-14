@@ -2,16 +2,19 @@
     border: solid;
     border-radius: 20px;
     min-width: 200pt;
-    min-height: 250pt;
-    margin: 2%;
-    border-color: #132E32;
+    width: 15%;
+    height: 10%;
+    margin: 1%;
+    border-color: #ffffff;
     border-radius: 10%;
     border-width: thick;
-    color: #c5fffd;
+    color: #ffffff;
     transition: border-color 1s ease-out 100ms;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .movie-card:hover {
@@ -19,9 +22,40 @@
     box-shadow: 10px 5px 5px #88d9e6;
 }
 
+.card-icon-display {
+    display: flex;
+    flex-direction: row;
+}
+
 .movie-img {
-    min-width: 150pt;
+    /* min-width: 100%; */
     min-height: 150pt;
+    height: 200pt;
     max-width: 200px;
+    /* width: 100%; */
+    /* height: 100%; */
+    object-fit: cover;
     border-color: #132E32;
+    border-top-right-radius: 9%;
+    border-top-left-radius: 9%;
+}
+
+.card-side-bar {
+    font-size: 30pt;
+    padding: 10%;
+    margin-right: 0%;
+    float: right;
+}
+
+.like-icon {
+    color: white;
+    margin: 10%;
+}
+
+.like-icon:hover {
+    color: #c5fffd;
+}
+
+.watched-button:hover {
+    color: #c5fffd;
 }

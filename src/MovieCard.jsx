@@ -1,23 +1,50 @@
-// import { useState } from 'react'
 import './MovieCard.css'
 import PropTypes from 'prop-types'
 
 const MovieCard = ({id, title, rating, poster_path, onMovieCardClick}) => {
 
-  const onCardClick = () => {
+  const onCardClick = (handleLikeClick) => {
     document.getElementById('modal-overlay').style.display = 'block';
     document.getElementById('modal-overlay').scrollIntoView({behavior: 'smooth'});
     onMovieCardClick(id);
   }
 
+  let clickedLikeBefore = false;
+  const handleLikeClick = (event) => {
+    event.stopPropagation();
+    if (!clickedLikeBefore){
+        event.target.style.color = "red";
+    } else {
+        event.target.style.color = "white";
+    }
+    clickedLikeBefore = !clickedLikeBefore;
+
+
+  }
+
+  let clickedWatchedBefore = false;
+  const handleWatchedClick = (event) => {
+    event.stopPropagation();
+    if (!clickedWatchedBefore){
+      event.target.style.color = "red";
+    } else {
+      event.target.style.color = "white";
+    }
+    clickedWatchedBefore = !clickedWatchedBefore;
+  }
+
   return (
     <div className="movie-card" onClick={onCardClick}>
-      <img className="movie-img" src={"https://image.tmdb.org/t/p/w500"+poster_path}></img>
-      <h2>{title}</h2>
-      <div className='approval-bar'>
-        <span className="like-icon">&#9829</span>
-        <h3>{"Rating: " + rating}</h3>
+      <div className="card-icon-display">
+        <img className="movie-img" src={"https://image.tmdb.org/t/p/w500"+poster_path}></img>
+        <div className='card-side-bar'>
+          <span className="like-icon" onClick={handleLikeClick}>♥</span>
+          <h3 className="watched-button" onClick={handleWatchedClick}>▶</h3>
+        </div>
       </div>
+      <h2>{title}</h2>
+      <h3>{"Rating: " + rating}</h3>
+
 
   </div>
   )

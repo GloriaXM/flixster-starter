@@ -1,0 +1,30 @@
+.side-bar {
+    display: flex;
+    position: absolute;
+    top: 30%;
+    right: 0%;
+    font-size: xx-large;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #132E32;
+    border-top-left-radius: 20%;
+    border-bottom-left-radius: 20%;
+    color: white;
+    font-size: 30pt;
+}
+
+.side-like-icon {
+    font-size: 150%;
+}
+
+.side-watched-button {
+    border-top: solid;
+}
+
+.side-like-icon:hover {
+    color: #c5fffd;
+}
+
+.side-watched-button:hover {
+    color: #c5fffd;
+}
