@@ -1,4 +1,5 @@
 import './Sort.css'
+import PropTypes from 'prop-types'
 
 const Sort = ({onGetNewGenre, onSortByAttribute}) => {
   //TODO: call https://api.themoviedb.org/3/genre/movie/list to generate possible genre options
@@ -50,6 +51,11 @@ const Sort = ({onGetNewGenre, onSortByAttribute}) => {
     </select>
   </>
   )
+}
+
+Sort.propTypes = {
+  onGetNewGenre: PropTypes.func,
+  onSortByAttribute: PropTypes.func,
 }
 
 export default Sort

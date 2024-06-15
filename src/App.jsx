@@ -13,6 +13,7 @@ const App = () => {
   const [apiFunctionCall, setApiFunctionCall] = useState('now_playing');
   const [sortAttribute, setSortAttribute] = useState('');
   let favoritedList = [];
+  let watchedList = [];
 
   const generalFetchMovies = async (fxn, prevMovieList) => {
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -64,6 +65,7 @@ const App = () => {
     setSearchTerm('');
     setApiFunctionCall('search');
     setLoadedMovies([]);
+    setPage(1);
   }
 
   const goToNowShowingView = () => {
@@ -99,7 +101,23 @@ const App = () => {
     if (appending) {
       favoritedList.push(simplifiedMovieObject);
     } else {
-      favoritedList = favoritedList.filter((movie, index) => {movie.id !== simplifiedMovieObject.id});
+      favoritedList = favoritedList.filter((movie) => {movie.id !== simplifiedMovieObject.id});
+    }
+  }
+
+  const handleSideWatchedClick = () => {
+    setLoadedMovies(watchedList);
+    setSearchTerm('');
+    setApiFunctionCall('');
+    setPage(1);
+  }
+
+  const appendWatchedMovie = (simplifiedMovieObject, appending) => {
+    //TODO: Combine with appendFavoriteMovie()
+    if (appending) {
+      watchedList.push(simplifiedMovieObject);
+    } else {
+      watchedList = watchedList.filter((movie) => {movie.id !== simplifiedMovieObject.id});
     }
   }
 
@@ -107,12 +125,12 @@ const App = () => {
     <div className="App">
       <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView}
       onGetNewGenre={getNewGenre} onSortByAttribute={sortByAttribute}/>
-      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage} appendFavoriteMovie={appendFavoriteMovie}/>
-      <SideBar onSideLikeClick={handleSideLikeClick}/>
+      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage} appendFavoriteMovie={appendFavoriteMovie}
+      appendWatchedMovie={appendWatchedMovie}/>
+      <SideBar onSideLikeClick={handleSideLikeClick} onSideWatchedClick={handleSideWatchedClick}/>
       <Footer/>
-  </div>
+    </div>
   )
-
 }
 
 export default App

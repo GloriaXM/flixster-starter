@@ -1,9 +1,9 @@
 import './MovieCard.css'
 import PropTypes from 'prop-types'
 
-const MovieCard = ({id, title, rating, poster_path, onMovieCardClick, onHandleLikeClick}) => {
+const MovieCard = ({id, title, rating, poster_path, onMovieCardClick, onHandleLikeClick, onHandleWatchedClick}) => {
 
-  const onCardClick = (handleLikeClick) => {
+  const onCardClick = () => {
     document.getElementById('modal-overlay').style.display = 'block';
     document.getElementById('modal-overlay').scrollIntoView({behavior: 'smooth'});
     onMovieCardClick(id);
@@ -19,24 +19,31 @@ const MovieCard = ({id, title, rating, poster_path, onMovieCardClick, onHandleLi
       "vote_average": rating,
       "poster_path": poster_path,
     }
-    if (!clickedWatchedBefore){
+    if (!clickedLikeBefore){
       event.target.style.color = "red";
       onHandleLikeClick(simplifiedMovieObject, true);
     } else {
       event.target.style.color = "white";
       onHandleLikeClick(simplifiedMovieObject, false);
     }
-    clickedWatchedBefore = !clickedWatchedBefore;
-
+    clickedLikeBefore = !clickedLikeBefore;
   }
 
   let clickedWatchedBefore = false;
   const handleWatchedClick = (event) => {
     event.stopPropagation();
+    let simplifiedMovieObject = {
+      "id": id,
+      "title" : title,
+      "vote_average": rating,
+      "poster_path": poster_path,
+    }
     if (!clickedWatchedBefore){
       event.target.style.color = "red";
+      onHandleWatchedClick(simplifiedMovieObject, true);
     } else {
       event.target.style.color = "white";
+      onHandleWatchedClick(simplifiedMovieObject, false);
     }
     clickedWatchedBefore = !clickedWatchedBefore;
   }
@@ -56,13 +63,9 @@ const MovieCard = ({id, title, rating, poster_path, onMovieCardClick, onHandleLi
       </div>
       <h2>{title}</h2>
       <h3>{"Rating: " + rating}</h3>
-
-
   </div>
   )
-
 }
-
 
 MovieCard.propTypes = {
   id: PropTypes.number.isRequired,

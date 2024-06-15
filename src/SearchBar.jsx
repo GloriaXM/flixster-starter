@@ -1,7 +1,6 @@
 import './SearchBar.css'
 import PropTypes from 'prop-types'
 
-
 const SearchBar = ({onSearchSubmit, onGoToNowShowingView}) => {
 
   const handleSearchSubmit = (e) => {
@@ -29,7 +28,6 @@ const SearchBar = ({onSearchSubmit, onGoToNowShowingView}) => {
       <button id="submit">Search</button>
   </form>
   )
-
 }
 
 SearchBar.propTypes = {

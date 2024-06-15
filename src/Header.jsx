@@ -16,7 +16,6 @@ const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView, onGetNe
     onGoToSearchView();
   }
 
-
   return (
     <div className="header">
       <h1> Flixster </h1>
@@ -25,7 +24,6 @@ const Header = ({onSearchSubmit, onGoToSearchView, onGoToNowShowingView, onGetNe
         <SearchBar onSearchSubmit={onSearchSubmit} onGoToNowShowingView={onGoToNowShowingView}/>
         <Sort onGetNewGenre={onGetNewGenre} onSortByAttribute={onSortByAttribute}/>
       </div>
-
   </div>
   )
 }

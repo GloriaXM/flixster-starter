@@ -35,13 +35,13 @@ Deployed Application (optional): [Flixster Deployed Site](ADD_LINK_HERE)
   - [ ] Website is deployed via Render.
 - [x] **Embedded Movie Trailers**
   - [x] Within the popup displaying a movie's details, users can play the movie trailer.
-- [ ] **Watched Checkbox**
-  - [ ] For each movie displayed, users can mark the movie as watched.
+- [x] **Watched Checkbox**
+  - [x] For each movie displayed, users can mark the movie as watched.
 - [x] **Favorite Button**
   - [x] For each movie displayed, users can favorite the movie.
-- [ ] **Sidebar**
+- [x] **Sidebar**
   - [x] Users can open a sidebar
-  - [ ] The sidebar displays the user's favorited and watched movies
+  - [x] The sidebar displays the user's favorited and watched movies
 
 ### Walkthrough Video
 
@@ -61,7 +61,7 @@ I would have restructured the logic behind my header and side-bar buttons. I fel
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
-While I created a factory method for generating jsons within the App.jsx files, one of my classmates defined his own class that he could then call all throughout his project without passing props. I found it a really elegant solution. I would have also liked to implement an icon library to use more visually appealing icons.
+While I created a factory method for generating jsons within the App.jsx files, one of my classmates defined his own class that he could then call all throughout his project without passing props. I found it a really elegant solution. I would have also liked to implement an icon library to use more visually appealing icons. My biggest room for improvement, however, is that I was not able to make the code as robust as I had hoped. There are still some specific sequences of button presses that result in undefined behavior. Next time, I would definitely put more time into designing the structure of the entire project initially, rather than follow through the directions step-by-step.
 
 ### Open-source libraries used
 

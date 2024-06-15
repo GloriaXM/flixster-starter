@@ -1,8 +1,6 @@
-// import { useState } from 'react'
 import './ModalOverlay.css'
-// import MovieList from './MovieList'
 
-const ModalOverlay = ({modalMovieID, embedTrailerKey}) => {
+const ModalOverlay = ({embedTrailerKey}) => {
     const closeModal = () => {
         document.getElementById('modal-overlay').style.display = 'none'
     }
@@ -23,7 +21,6 @@ const ModalOverlay = ({modalMovieID, embedTrailerKey}) => {
             </div>
         </div>
     )
-
 }
 
 export default ModalOverlay
