@@ -2,7 +2,11 @@
 
 Submitted by: Gloria Moudou
 
-Estimated time spent: 20 hours spent in total
+Estimated time spent: 3
+
+https://github.com/GloriaXM/flixster-starter/assets/112780860/fa8182fa-92e7-45bb-b7ee-7673f4039ca2
+
+0 hours spent in total
 
 Deployed Application (optional): [Flixster Deployed Site](ADD_LINK_HERE)
 
@@ -45,9 +49,11 @@ Deployed Application (optional): [Flixster Deployed Site](ADD_LINK_HERE)
 
 ### Walkthrough Video
 
-`TODO://` Add the embedded URL code to your animated app walkthrough below, `ADD_EMBEDDED_CODE_HERE`. Make sure the video or gif actually renders and animates when viewing this README. (🚫 Remove this paragraph after adding walkthrough video)
 
-`ADD_EMBEDDED_CODE_HERE`
+https://github.com/GloriaXM/flixster-starter/assets/112780860/94c70fda-b699-458c-b04c-274cadbc468f
+
+
+
 
 ### Reflection
 
