@@ -4,9 +4,10 @@ import MovieCard from './MovieCard'
 import PropTypes from 'prop-types'
 import ModalOverlay from './ModalOverlay'
 
-const MovieList = ({movieList, onClickLoadMore}) => {
+const MovieList = ({movieList, onClickLoadMore, appendFavoriteMovie, appendWatchedMovie}) => {
   const [modalMovieID, setModalMovieID] = useState(0);
   const [modalMovieDetails, setModalMovieDetails] = useState({});
+  const [trailerEmbedKey, setTrailerEmbedKey] = useState('');
 
   const handleLoadMoreClick = (event) => {
     event.preventDefault();
@@ -20,14 +21,21 @@ const MovieList = ({movieList, onClickLoadMore}) => {
   const fetchMovieDetails = async (movieID) => {
     const apiKey = import.meta.env.VITE_API_KEY;
 
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US&api_key=${apiKey}`);
-    const data = await response.json();
+    const resMovieDetails = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US&api_key=${apiKey}`);
+    const movieDetails = await resMovieDetails.json();
+    setModalMovieDetails(movieDetails);
 
-    setModalMovieDetails(data);
+    const resMovieVideo = await fetch(`https://api.themoviedb.org/3/movie/${modalMovieID}/videos?language=en-US&api_key=${apiKey}`);
+    const movieVideoData = await resMovieVideo.json();
+    const allVideos = movieVideoData.results;
+    const trailerKey = allVideos.find(video => video.type === 'Trailer').key;
+    setTrailerEmbedKey(trailerKey);
   };
 
   useEffect(() => {
-    fetchMovieDetails(modalMovieID);
+    if (modalMovieID !== 0){
+      fetchMovieDetails(modalMovieID);
+    }
 
   }, [modalMovieID]);
 
@@ -39,28 +47,39 @@ const MovieList = ({movieList, onClickLoadMore}) => {
       document.getElementById('modal-release-date').textContent = "Release Date: " + modalMovieDetails.release_date;
       document.getElementById('modal-overview').textContent = "Overview: " + modalMovieDetails.overview;
       document.getElementById('modal-genres').textContent = "Genres: " + modalMovieDetails.genres.map(genre => genre.name).join(', ');
-      document.getElementById('modal-movie-img').src = "https://image.tmdb.org/t/p/w500" + modalMovieDetails.backdrop_path;
+      if (modalMovieDetails.hasOwnProperty('backdrop_path')) {
+        document.getElementById('modal-movie-img').src = "https://image.tmdb.org/t/p/w500" + modalMovieDetails.backdrop_path;
+      }
     }
   }, [modalMovieDetails]);
+
+  const onHandleLikeClick = (simplifiedMovieObject, appending) => {
+      appendFavoriteMovie(simplifiedMovieObject, appending);
+  }
+
+  const onHandleWatchedClick = (simplifiedMovieObject, appending) => {
+    appendWatchedMovie(simplifiedMovieObject, appending);
+  }
 
   return (
     <>
       <div className="movie-list">
-        {movieList.map(movie => (
-          <MovieCard key={movie.id} id={movie.id} title={movie.title} rating={movie.vote_average} poster_path={movie.poster_path} onMovieCardClick={onMovieCardClick}/>
-          ))}
+          {movieList.map(movie => (
+            <MovieCard key={movie.id} id={movie.id} title={movie.title} rating={movie.vote_average} poster_path={movie.poster_path}
+            onMovieCardClick={onMovieCardClick} onHandleLikeClick={onHandleLikeClick} onHandleWatchedClick={onHandleWatchedClick}/>
+            ))}
+        <div>
         <button id="load-more-button" onClick={handleLoadMoreClick}> Load More</button>
+        </div>
       </div>
-      <ModalOverlay modalMovieID={modalMovieID}/>
+      <ModalOverlay modalMovieID={modalMovieID} embedTrailerKey={trailerEmbedKey}/>
     </>
   )
-
 }
 
 MovieList.propTypes = {
   movieList: PropTypes.array.isRequired,
   onClickLoadMore: PropTypes.func.isRequired
 }
-
 
 export default MovieList

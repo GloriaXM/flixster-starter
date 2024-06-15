@@ -1,5 +1,8 @@
 .footer {
+    display:flex;
     padding: 5%;
-    background-color: #176087;
-    text-align: end;
+    background-color: grey;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

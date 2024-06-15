@@ -4,10 +4,11 @@
     justify-content: space-around;
     align-content: center;
     padding: 5%;
-    font-family: cursive;
+    font-family: monospace;
     color: white;
     font-size:x-large;
-    border-radius: 10%;
+    border-radius: 0%;
+    background-color: grey;
 }
 
 .filter-bar {

@@ -3,27 +3,43 @@ import './App.css'
 import MovieList from './MovieList'
 import Header from './Header'
 import Footer from './Footer'
-
+import SideBar from './SideBar'
 
 const App = () => {
   const [loadedMovies, setLoadedMovies] = useState([]);
   const [page, setPage] = useState(1); //Page number of next page to load
-  const baseURL = "https://image.tmdb.org/t/p/w500";
   const [searchTerm, setSearchTerm] = useState('');
+  const [genre, setGenre] = useState('');
+  const [apiFunctionCall, setApiFunctionCall] = useState('now_playing');
+  const [sortAttribute, setSortAttribute] = useState('');
+  let favoritedList = [];
+  let watchedList = [];
 
-  const generalFetchMovies = async (fxn, prevMovieList, pages, searchTerm) => {
+  const generalFetchMovies = async (fxn, prevMovieList) => {
     const apiKey = import.meta.env.VITE_API_KEY;
     let response = {};
+    let url = '';
 
     switch (fxn) {
       case 'now_playing':
-        response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${pages}&api_key=${apiKey}`);
+        response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}&api_key=${apiKey}`);
         break;
       case 'search':
         response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
         break;
-      default: response = {};
-
+      case 'by_genre':
+        response = await fetch(`https://api.themoviedb.org/3/discover/movie?with_genres=${genre}&language=en-US&page=${page}&api_key=${apiKey}`);
+        break;
+      case 'sort_by_attribute':
+        if (genre === ''){
+          url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=${sortAttribute}&api_key=${apiKey}`;
+        } else {
+          url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&with_genres=${genre}&language=en-US&page=${page}&sort_by=${sortAttribute}&api_key=${apiKey}`;
+        }
+        response = await fetch(url);
+        break;
+      default:
+        response = response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&${page}=1&api_key=${apiKey}`);
     }
 
     const data = await response.json();
@@ -31,41 +47,90 @@ const App = () => {
   }
 
   useEffect(() => {
-    generalFetchMovies('search', [], 1, searchTerm);
-  }, [searchTerm]);
-
-  useEffect(() => {
-    generalFetchMovies('now_playing', loadedMovies, page, '');
-  }, [page]);
+    generalFetchMovies(apiFunctionCall, loadedMovies, page, searchTerm, genre, sortAttribute);
+  }, [searchTerm, page, genre, sortAttribute]);
 
   const loadAdditionalPage = () => {
     setPage(page + 1);
-    generalFetchMovies('now_playing', loadedMovies, page+1, '');
   }
 
   const onSubmitSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
+    setApiFunctionCall('search');
+    setLoadedMovies([]);
+    setPage(1);
   }
 
   const goToSearchView = () => {
     setSearchTerm('');
+    setApiFunctionCall('search');
     setLoadedMovies([]);
+    setPage(1);
   }
 
   const goToNowShowingView = () => {
     setPage(1);
-    generalFetchMovies('now_playing', [], 1, '');
+    setLoadedMovies([]);
+    setApiFunctionCall('now_playing');
+    generalFetchMovies('now_playing', [], 1, '', '', '');
   }
 
+  const getNewGenre = (newGenreName) => {
+    setLoadedMovies([]);
+    setApiFunctionCall('by_genre');
+    setGenre(newGenreName);
+    setPage(1);
+  }
+
+  const sortByAttribute = (sortAttribute) => {
+    setLoadedMovies([]);
+    setApiFunctionCall('sort_by_attribute');
+    setSortAttribute(sortAttribute);
+    setPage(1);
+  }
+
+  const handleSideLikeClick = (event) => {
+    setLoadedMovies(favoritedList);
+    setSearchTerm('');
+    setApiFunctionCall('');
+    setPage(1);
+  }
+
+  const appendFavoriteMovie = (simplifiedMovieObject, appending) => {
+    //TODO: Add favorites state to access and search on every render to maintain favorite state over renders
+    if (appending) {
+      favoritedList.push(simplifiedMovieObject);
+    } else {
+      favoritedList = favoritedList.filter((movie) => {movie.id !== simplifiedMovieObject.id});
+    }
+  }
+
+  const handleSideWatchedClick = () => {
+    setLoadedMovies(watchedList);
+    setSearchTerm('');
+    setApiFunctionCall('');
+    setPage(1);
+  }
+
+  const appendWatchedMovie = (simplifiedMovieObject, appending) => {
+    //TODO: Combine with appendFavoriteMovie()
+    if (appending) {
+      watchedList.push(simplifiedMovieObject);
+    } else {
+      watchedList = watchedList.filter((movie) => {movie.id !== simplifiedMovieObject.id});
+    }
+  }
 
   return (
     <div className="App">
-      <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView}/>
-      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage}/>
+      <Header onSearchSubmit={onSubmitSearch}  onGoToSearchView={goToSearchView} onGoToNowShowingView={goToNowShowingView}
+      onGetNewGenre={getNewGenre} onSortByAttribute={sortByAttribute}/>
+      <MovieList movieList={loadedMovies} onClickLoadMore={loadAdditionalPage} appendFavoriteMovie={appendFavoriteMovie}
+      appendWatchedMovie={appendWatchedMovie}/>
+      <SideBar onSideLikeClick={handleSideLikeClick} onSideWatchedClick={handleSideWatchedClick}/>
       <Footer/>
-  </div>
+    </div>
   )
-
 }
 
 export default App

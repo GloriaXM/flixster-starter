@@ -1,12 +1,11 @@
 .App {
   text-align: center;
-  background-image: linear-gradient(#53A2BE, #0A2239)
-  /* display: flex;
-  justify-content: center; */
+  background-color: rgb(9, 0, 0);
+  font-family: monospace;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #58657e;
   display: flex;
   flex-direction: row;
   align-items: center;

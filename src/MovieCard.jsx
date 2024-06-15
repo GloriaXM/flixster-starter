@@ -1,8 +1,7 @@
-// import { useState } from 'react'
 import './MovieCard.css'
 import PropTypes from 'prop-types'
 
-const MovieCard = ({id, title, rating, poster_path, onMovieCardClick}) => {
+const MovieCard = ({id, title, rating, poster_path, onMovieCardClick, onHandleLikeClick, onHandleWatchedClick}) => {
 
   const onCardClick = () => {
     document.getElementById('modal-overlay').style.display = 'block';
@@ -10,17 +9,63 @@ const MovieCard = ({id, title, rating, poster_path, onMovieCardClick}) => {
     onMovieCardClick(id);
   }
 
+  let clickedLikeBefore = false;
+  const handleLikeClick = (event) => {
+    event.stopPropagation();
+
+    let simplifiedMovieObject = {
+      "id": id,
+      "title" : title,
+      "vote_average": rating,
+      "poster_path": poster_path,
+    }
+    if (!clickedLikeBefore){
+      event.target.style.color = "red";
+      onHandleLikeClick(simplifiedMovieObject, true);
+    } else {
+      event.target.style.color = "white";
+      onHandleLikeClick(simplifiedMovieObject, false);
+    }
+    clickedLikeBefore = !clickedLikeBefore;
+  }
+
+  let clickedWatchedBefore = false;
+  const handleWatchedClick = (event) => {
+    event.stopPropagation();
+    let simplifiedMovieObject = {
+      "id": id,
+      "title" : title,
+      "vote_average": rating,
+      "poster_path": poster_path,
+    }
+    if (!clickedWatchedBefore){
+      event.target.style.color = "red";
+      onHandleWatchedClick(simplifiedMovieObject, true);
+    } else {
+      event.target.style.color = "white";
+      onHandleWatchedClick(simplifiedMovieObject, false);
+    }
+    clickedWatchedBefore = !clickedWatchedBefore;
+  }
+
+  //TODO: add logic to handle incomplete movie results
   return (
     <div className="movie-card" onClick={onCardClick}>
-      <img className="movie-img" src={"https://image.tmdb.org/t/p/w500"+poster_path}></img>
+      <div className="card-icon-display">
+        <img className="movie-img" alt="movie-poster" src={"https://image.tmdb.org/t/p/w500"+poster_path} onError={({ currentTarget }) => {
+          currentTarget.onerror = null; // prevents looping
+          currentTarget.src="../public/movie.png";
+        }}></img>
+        <div className='card-side-bar'>
+          <span className="like-icon" onClick={handleLikeClick}>♥</span>
+          <h3 className="watched-button" onClick={handleWatchedClick}>▶</h3>
+        </div>
+      </div>
       <h2>{title}</h2>
       <h3>{"Rating: " + rating}</h3>
-
   </div>
   )
-
 }
-
 
 MovieCard.propTypes = {
   id: PropTypes.number.isRequired,
