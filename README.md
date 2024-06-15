@@ -2,11 +2,7 @@
 
 Submitted by: Gloria Moudou
 
-Estimated time spent: 3
-
-https://github.com/GloriaXM/flixster-starter/assets/112780860/fa8182fa-92e7-45bb-b7ee-7673f4039ca2
-
-0 hours spent in total
+Estimated time spent: 30 hours spent in total
 
 Deployed Application (optional): [Flixster Deployed Site](ADD_LINK_HERE)
 
